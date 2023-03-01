@@ -25,20 +25,15 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public Customer addCustomer(Customer customer) throws CustomerAlreadyExist {
-        if (customerRepository.findById(customer.getId()).isPresent())
-            throw new CustomerAlreadyExist();
-        else
-            return customerRepository.save(customer);
+        if (customerRepository.findById(customer.getId()).isPresent()) throw new CustomerAlreadyExist();
+        else return customerRepository.save(customer);
     }
 
     @Override
     public List<Customer> getAllCustomer() throws CustomerNotFound {
         List<Customer> customerList = customerRepository.findAll();
-        if (customerList.isEmpty())
-            throw new CustomerNotFound();
+        if (customerList.isEmpty()) throw new CustomerNotFound();
         else
-
-
             return customerList;
     }
 
