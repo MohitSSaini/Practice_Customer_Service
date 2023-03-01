@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CustomerServiceImpl implements CustomerService {
@@ -38,8 +39,14 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public boolean deleteCustomerById(int id) {
-        return false;
+    public boolean deleteCustomerById(int id) throws CustomerNotFound {
+        Optional<Customer> customerOptional = customerRepository.findById(id);
+        if (customerOptional.isEmpty()) {
+            customerRepository.deleteById(id);
+            throw new CustomerNotFound();
+        } else
+            customerRepository.deleteById(id);
+        return true;
     }
 
     @Override
