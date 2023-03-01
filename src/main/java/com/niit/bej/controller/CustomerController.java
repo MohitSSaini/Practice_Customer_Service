@@ -5,5 +5,12 @@
  */
 package com.niit.bej.controller;
 
+import com.niit.bej.service.CustomerService;
+
 public class CustomerController {
+    public final CustomerService customerService;
+
+    public CustomerController(CustomerService customerService) {
+        this.customerService = customerService;
+    }
 }
