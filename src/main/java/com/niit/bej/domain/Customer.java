@@ -5,10 +5,15 @@
  */
 package com.niit.bej.domain;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
 import java.util.Objects;
 
+@Document
 public class Customer {
 
+    @Id
     private int id;
     private String name;
 
