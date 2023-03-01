@@ -7,14 +7,12 @@ package com.niit.bej.controller;
 
 import com.niit.bej.domain.Customer;
 import com.niit.bej.exception.CustomerAlreadyExist;
+import com.niit.bej.exception.CustomerNotFound;
 import com.niit.bej.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -44,6 +42,18 @@ public class CustomerController {
             return new ResponseEntity<>(customerList, HttpStatus.FOUND);
         } catch (Exception exception) {
             return new ResponseEntity<>(exception, HttpStatus.CONFLICT);
+        }
+    }
+
+    @DeleteMapping("/Delete/{id}")
+    public ResponseEntity<?> removeCustomer(@PathVariable int id) throws CustomerNotFound {
+        try {
+            boolean deleteCustomerById = customerService.deleteCustomerById(id);
+            return new ResponseEntity<>("Customer Deleted", HttpStatus.OK);
+        } catch (CustomerNotFound notFound) {
+            throw new CustomerNotFound();
+        } catch (Exception exception) {
+            return new ResponseEntity<>(exception.getMessage(), HttpStatus.CONFLICT);
         }
     }
 }
