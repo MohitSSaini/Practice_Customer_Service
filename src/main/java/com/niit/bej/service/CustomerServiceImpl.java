@@ -6,6 +6,8 @@
 package com.niit.bej.service;
 
 import com.niit.bej.domain.Customer;
+import com.niit.bej.exception.CustomerAlreadyExist;
+import com.niit.bej.exception.CustomerNotFound;
 import com.niit.bej.repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,13 +24,22 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public Customer addCustomer(Customer customer) {
-        return null;
+    public Customer addCustomer(Customer customer) throws CustomerAlreadyExist {
+        if (customerRepository.findById(customer.getId()).isPresent())
+            throw new CustomerAlreadyExist();
+        else
+            return customerRepository.save(customer);
     }
 
     @Override
-    public List<Customer> getAllCustomer() {
-        return null;
+    public List<Customer> getAllCustomer() throws CustomerNotFound {
+        List<Customer> customerList = customerRepository.findAll();
+        if (customerList.isEmpty())
+            throw new CustomerNotFound();
+        else
+
+
+            return customerList;
     }
 
     @Override
