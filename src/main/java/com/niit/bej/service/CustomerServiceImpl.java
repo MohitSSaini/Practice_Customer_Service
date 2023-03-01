@@ -43,7 +43,11 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public List<Customer> getAllCustomerByProductName(String name) {
-        return null;
+    public List<Customer> getAllCustomerByProductName(String name) throws CustomerNotFound {
+        List<Customer> customerList = customerRepository.fetchAllCustomerByProductName(name);
+        if (customerList.isEmpty())
+            throw new CustomerNotFound();
+        else
+            return customerList;
     }
 }
