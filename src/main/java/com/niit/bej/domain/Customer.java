@@ -5,6 +5,8 @@
  */
 package com.niit.bej.domain;
 
+import java.util.Objects;
+
 public class Customer {
 
     private int id;
@@ -65,5 +67,18 @@ public class Customer {
 
     public void setProduct(Product product) {
         this.product = product;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Customer customer = (Customer) o;
+        return id == customer.id && phoneNo == customer.phoneNo && Objects.equals(name, customer.name) && Objects.equals(products, customer.products) && Objects.equals(product, customer.product);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, products, phoneNo, product);
     }
 }
