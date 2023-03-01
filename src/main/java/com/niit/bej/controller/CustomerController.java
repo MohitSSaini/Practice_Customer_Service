@@ -26,7 +26,7 @@ public class CustomerController {
     }
 
     @PostMapping("/addCustomer")
-    public ResponseEntity<?> addCustomer(@RequestBody Customer customer) {
+    public ResponseEntity<?> addCustomer(@RequestBody Customer customer) throws CustomerAlreadyExist {
         try {
             Customer insertedcustomer = customerService.addCustomer(customer);
             return new ResponseEntity<>(insertedcustomer, HttpStatus.CREATED);
@@ -36,7 +36,7 @@ public class CustomerController {
     }
 
     @GetMapping("/getCustomer")
-    public ResponseEntity<?> getCustomer() {
+    public ResponseEntity<?> getCustomer() throws CustomerNotFound {
         try {
             List<Customer> customerList = customerService.getAllCustomer();
             return new ResponseEntity<>(customerList, HttpStatus.FOUND);
@@ -54,6 +54,18 @@ public class CustomerController {
             throw new CustomerNotFound();
         } catch (Exception exception) {
             return new ResponseEntity<>(exception.getMessage(), HttpStatus.CONFLICT);
+        }
+    }
+
+    @GetMapping("/getAllCustomerByProductName/{name}")
+    public ResponseEntity<?> getAllCustomerByProductName(@PathVariable String name) throws CustomerNotFound {
+        try {
+            List<Customer> fetchCustomer = customerService.getAllCustomerByProductName(name);
+            return new ResponseEntity<>(fetchCustomer, HttpStatus.FOUND);
+        } catch (CustomerNotFound notFound) {
+            throw new CustomerNotFound();
+        } catch (Exception exception) {
+            return new ResponseEntity<>(exception, HttpStatus.CONFLICT);
         }
     }
 }
