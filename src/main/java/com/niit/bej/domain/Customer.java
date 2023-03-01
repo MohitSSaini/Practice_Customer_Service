@@ -6,4 +6,14 @@
 package com.niit.bej.domain;
 
 public class Customer {
+
+    private int id;
+    private String name;
+
+    private String products;
+
+    private long phoneNo;
+
+    private Product product;
+
 }
