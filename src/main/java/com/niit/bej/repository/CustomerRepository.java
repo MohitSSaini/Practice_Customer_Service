@@ -5,5 +5,8 @@
  */
 package com.niit.bej.repository;
 
-public class CustomerRepository {
+import com.niit.bej.domain.Customer;
+import org.springframework.data.mongodb.repository.MongoRepository;
+
+public interface CustomerRepository extends MongoRepository<Customer, Integer> {
 }
